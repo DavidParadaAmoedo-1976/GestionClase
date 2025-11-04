@@ -1,12 +1,15 @@
 package vista;
 
-import controlador.AulaControlador;
 import controlador.ValidarDatos;
 import modelo.AlumnoDTO;
 
-import java.util.Scanner;
-
 public class AulaVista {
+
+    ValidarDatos entrada;
+
+    public AulaVista(ValidarDatos entrada) {
+        this.entrada = entrada;
+    }
 
     public void mostrarClase(){
 
@@ -26,20 +29,17 @@ public class AulaVista {
     }
 
     public int solicitarMenu(){
-        Scanner sc = new Scanner(System.in);
-        int opcion = ValidarDatos.enteroCorrecto("Elije una opción: ",0,6);
+
+        int opcion = entrada.enteroCorrecto("Elije una opción: ",0,6);
         return opcion;
     }
 
     public AlumnoDTO obtenerDatosAlumno(){
         AlumnoDTO alumnoRetorno;
-        String nombre = ValidarDatos.leerNombre();
-        String dni = ValidarDatos.leerDni();
-        int nacimiento = ValidarDatos.enteroCorrecto("Introduce el año de nacimiento: ",1900,2025);
+        String nombre = entrada.leerNombre();
+        String dni = entrada.leerDni();
+        int nacimiento = entrada.enteroCorrecto("Introduce el año de nacimiento: ",1900,2025);
         alumnoRetorno = new AlumnoDTO(nombre,dni,nacimiento);
-        return alumnoRetorno();
+        return alumnoRetorno;
     }
-
-
-
 }

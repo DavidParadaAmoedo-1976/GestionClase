@@ -3,9 +3,13 @@ package controlador;
 import java.util.Scanner;
 
 public class ValidarDatos {
-    static Scanner sc =new Scanner(System.in);
+    private Scanner sc;
 
-    public static int enteroCorrecto(String dato, int minInclusive, int maxInclusive) {
+    public ValidarDatos() {
+        this.sc = new Scanner(System.in);
+    }
+
+    public int enteroCorrecto(String dato, int minInclusive, int maxInclusive) {
 
         int num = 0;
         boolean datoOk = false;
@@ -27,7 +31,7 @@ public class ValidarDatos {
         return num;
     }
 
-    public static String leerNombre() {
+    public String leerNombre() {
         String nombre = "";
         try {
             do {
@@ -40,7 +44,7 @@ public class ValidarDatos {
         return nombre;
     }
 
-    public static String leerDni() {
+    public String leerDni() {
         String dni = "";
         try {
             do {
@@ -53,7 +57,7 @@ public class ValidarDatos {
         return dni;
     }
 
-    private static boolean validarDni(String dni) {
+    private boolean validarDni(String dni) {
         if (!dni.matches("[0-9]{8}[A-Z]")) return false;
 
 
