@@ -9,6 +9,7 @@ public class Program {
         ValidarDatos entrada = new ValidarDatos();
         AulaVista vista = new AulaVista(entrada);
         AulaControlador controlador = new AulaControlador(vista);
+        controlador.crearAlumnoPrueba();
 
         controlador.ejecuta();
     }

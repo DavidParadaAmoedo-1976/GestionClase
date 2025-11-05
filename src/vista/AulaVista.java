@@ -11,9 +11,6 @@ public class AulaVista {
         this.entrada = entrada;
     }
 
-    public void mostrarClase(){
-
-    }
 
     public void mostrarMenu(){
         System.out.println("""
@@ -41,5 +38,20 @@ public class AulaVista {
         int nacimiento = entrada.enteroCorrecto("Introduce el año de nacimiento: ",1900,2025);
         alumnoRetorno = new AlumnoDTO(nombre,dni,nacimiento);
         return alumnoRetorno;
+    }
+
+    public String obtenerDni(){
+        String dni = entrada.leerDni();
+        return dni;
+    }
+
+    public String obtenerNombreParcial(){
+        String nombreParcial = entrada.leerNombre();
+        return nombreParcial;
+    }
+
+    public void mostrarClase(){
+        for(int i = 0; i < alumnos.lengt; i++);
+        System.out.println("");
     }
 }
