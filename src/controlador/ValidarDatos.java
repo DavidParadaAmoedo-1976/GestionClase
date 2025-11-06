@@ -3,7 +3,7 @@ package controlador;
 import java.util.Scanner;
 
 public class ValidarDatos {
-    private Scanner sc;
+    private final Scanner sc;
 
     public ValidarDatos() {
         this.sc = new Scanner(System.in);
@@ -58,7 +58,7 @@ public class ValidarDatos {
     }
 
     private boolean validarDni(String dni) {
-        if (!dni.matches("[0-9]{8}[A-Z]")) return false;
+        return dni.matches("[0-9]{8}[A-Za-z]");
 
 
 //        try {
@@ -70,6 +70,22 @@ public class ValidarDatos {
 //            System.out.println("Error en formato del DNI.");
 //            return false;
 //        }
-        return true;
+    }
+
+    public boolean leerBooleano(String dato) {
+        boolean datoOk = false;
+        String input = "";
+
+        while (!datoOk) {
+            System.out.println("Introduzca " + dato);
+            System.out.println("S|s o N|n");
+            input = sc.nextLine();
+            if (input.equalsIgnoreCase("S") || input.equalsIgnoreCase("N")) {
+                datoOk = true;
+            } else {
+                System.out.println("Error: Introduzca S o N correctamente.");
+            }
+        }
+        return input.equalsIgnoreCase("S");
     }
 }

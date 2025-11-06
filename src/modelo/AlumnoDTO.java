@@ -1,27 +1,47 @@
 package modelo;
 
-import java.time.LocalDate;
-
 public class AlumnoDTO {
     String nombreCompleto;
     String dni;
     int anioNacimiento;
+    boolean estaEnClase;
 
     public AlumnoDTO(String nombreCompleto, String dni, int anioNacimiento) {
         this.nombreCompleto = nombreCompleto;
         this.dni = dni;
         this.anioNacimiento = anioNacimiento;
+        this.estaEnClase = false;
     }
 
     public String getNombreCompleto() {
         return nombreCompleto;
     }
 
+    public void setNombreCompleto(String nombreCompleto) {
+        this.nombreCompleto = nombreCompleto;
+    }
+
     public String getDni() {
         return dni;
     }
 
+    public void setDni(String dni) {
+        this.dni = dni;
+    }
+
     public int getAnioNacimiento() {
         return anioNacimiento;
+    }
+
+    public void setAnioNacimiento(int anioNacimiento) {
+        this.anioNacimiento = anioNacimiento;
+    }
+
+    public boolean isEstaEnClase() {
+        return estaEnClase;
+    }
+
+    public void setEstaEnClase(boolean estaEnClase) {
+        this.estaEnClase = estaEnClase;
     }
 }
