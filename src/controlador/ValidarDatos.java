@@ -3,7 +3,7 @@ package controlador;
 import java.util.Scanner;
 
 public class ValidarDatos {
-    private final Scanner sc;
+    public final Scanner sc;
 
     public ValidarDatos() {
         this.sc = new Scanner(System.in);
@@ -15,7 +15,7 @@ public class ValidarDatos {
         boolean datoOk = false;
 
         while (!datoOk) {
-            System.out.println(dato);
+            System.out.print(dato);
             String input = sc.nextLine();
             try {
                 num = Integer.parseInt(input);

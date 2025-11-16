@@ -4,7 +4,7 @@ import modelo.AlumnoDTO;
 import vista.AulaVista;
 
 public class AulaControlador {
-    private static final int MAXIMO_ALUMNOS = 30;
+    public static final int MAXIMO_ALUMNOS = 30;
     private final AulaVista vista;
 
     private final AlumnoDTO[] alumnos = new AlumnoDTO[MAXIMO_ALUMNOS];
@@ -14,10 +14,12 @@ public class AulaControlador {
     }
 
     public void ejecuta() {
-        int opcion;
-        do {
+        int opcion = -1;
+
+        while (opcion != 0) {
             vista.mostrarMenu();
             opcion = vista.solicitarMenu();
+
             switch (opcion) {
                 case 1 -> crearAlumno();
                 case 2 -> borrarAlumno();
@@ -28,8 +30,9 @@ public class AulaControlador {
                 case 0 -> System.out.println("Saliendo...");
                 default -> System.out.println("Opción no implementada.");
             }
-        } while (opcion != 0);
+        }
     }
+
 
     public void crearAlumno() {
         AlumnoDTO alumno = vista.obtenerDatosAlumno();
@@ -46,7 +49,19 @@ public class AulaControlador {
     }
 
     public void borrarAlumno() {
-        System.out.println(" pendiente");
+        String dni = vista.obtenerDni();
+        int count = 0;
+        for (int i = 0; i < alumnos.length; i++) {
+            if (alumnos[i] != null) {
+                String dnis = alumnos[i].getDni();
+                if (dnis.contains(dni)) {
+                    System.out.println("se va eliminar a : " + alumnos[i].getNombreCompleto() + " de la lista.");
+                    alumnos[i] = null;
+                    count++;
+                }
+            }
+        }
+        if (count == 0) System.out.println("No hay alumnos con ese Dni.");
     }
 
     public void buscarPorNombreParcial() {
@@ -62,27 +77,47 @@ public class AulaControlador {
                 }
             }
         }
-        System.out.println("Con la parte parcial de es nombre me aparecen:\n");
-        if(contador == 0){
-            System.out.println("no se han encontrado alumnos");
+        System.out.println("Con la parte parcial de ese nombre me aparecen:\n");
+        if (contador == 0) {
+            System.out.println("No se han encontrado alumnos");
         } else {
-            System.out.println("hay " + alumnosEncontrados.length + " alumnos");
-            for (int i= 0; i < contador; i++) {
+            for (int i = 0; i < contador; i++) {
                 System.out.println(alumnosEncontrados[i].getNombreCompleto() +
                         " con DNI: " + alumnosEncontrados[i].getDni() +
                         " Y nacido en el año " + alumnosEncontrados[i].getAnioNacimiento());
-
             }
         }
-
     }
 
     public void buscarPorDni() {
+        String dni = vista.obtenerDni();
+        int count = 0;
+        for (int i = 0; i < alumnos.length; i++) {
+            if (alumnos[i] != null) {
+                String dnis = alumnos[i].getDni();
+                if (dnis.contains(dni)) {
 
+                    System.out.println(alumnos[i].getNombreCompleto() +
+                            " con DNI: " + alumnos[i].getDni() +
+                            " Y nacido en el año " + alumnos[i].getAnioNacimiento());
+                    count++;
+                }
+            }
+        }
+        if (count == 0) System.out.println("No hay alumnos con ese Dni.");
     }
 
     public void pasarLista() {
-
+        for( int i = 0; i < alumnos.length; i++){
+            if(alumnos[i] == null){
+                continue;
+            } else {
+                System.out.println(alumnos[i].getNombreCompleto());
+                Boolean estaEnClase = vista.pasarlista();
+                alumnos[i].setEstaEnClase(estaEnClase);
+            }
+        }
+        System.out.println("Lista terminada.");
     }
 
     public void crearAlumnoPrueba() {
