@@ -89,7 +89,7 @@ public class AulaVista {
 
 
     public boolean pasarlista() {
-        boolean alumnoEsta = entrada.leerBooleano("Si este alumno esta en clase");
+        boolean alumnoEsta = entrada.leerBooleano("si este alumno esta en clase");
         return alumnoEsta;
     }
 }
