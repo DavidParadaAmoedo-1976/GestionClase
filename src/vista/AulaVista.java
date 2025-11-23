@@ -3,8 +3,6 @@ package vista;
 import controlador.ValidarDatos;
 import modelo.AlumnoDTO;
 
-import java.util.Scanner;
-
 public class AulaVista {
 
     ValidarDatos entrada;
@@ -15,8 +13,6 @@ public class AulaVista {
 
 
     public void mostrarMenu() {
-        Scanner pausa = new Scanner(System.in);
-        pausa.nextLine();
         System.out.println("""
                 \n
                     *** Menú de opciones ***
@@ -55,6 +51,7 @@ public class AulaVista {
         return nombreParcial;
     }
 
+/*
     public void mostrarClase(AlumnoDTO[] alumnos) {
 
         for (int i = 0; i < alumnos.length; i++) {
@@ -69,27 +66,84 @@ public class AulaVista {
             }
         }
     }
-    /*    public void mostrarClase(AlumnoDTO[] alumnos) {
-        final String ROJO = "\u001B[31m";
-        final String RESET = "\u001B[0m";
-        for (int i = 0; i < alumnos.length; i++) {
-            if (alumnos[i] != null) {
-                if (alumnos[i].isEstaEnClase()) {
-                    System.out.printf("\n" + (i+1) + ".- " + "%-25s, con DNI: %-10s  Nacido en: %-4d", alumnos[i].getNombreCompleto(),
-                            alumnos[i].getDni(), alumnos[i].getAnioNacimiento());
-                } else {
-                    System.out.printf("\n" + (i+1) + ".- " + ROJO + "%-25s, con DNI: %-10s  Nacido en: %-4d" + RESET, alumnos[i].getNombreCompleto(),
-                            alumnos[i].getDni(), alumnos[i].getAnioNacimiento());
+*/
+
+    public void mostrarClase(AlumnoDTO[] alumnos) {
+        if (alumnos == null || alumnos.length == 0) {
+            mostrarListaVacia();
+        } else {
+            final String ROJO = "\u001B[31m";
+            final String RESET = "\u001B[0m";
+            for (int i = 0; i < alumnos.length; i++) {
+                if (alumnos[i] != null) {
+                    if (alumnos[i].isEstaEnClase()) {
+                        System.out.printf("\n" + (i + 1) + "-\t " + "%-25s, con DNI: %-10s  Nacido en: %-4d", alumnos[i].getNombreCompleto(),
+                                alumnos[i].getDni(), alumnos[i].getAnioNacimiento());
+                    } else {
+                        System.out.printf("\n" + (i + 1) + "-\t " + ROJO + "%-25s, con DNI: %-10s  Nacido en: %-4d" + RESET, alumnos[i].getNombreCompleto(),
+                                alumnos[i].getDni(), alumnos[i].getAnioNacimiento());
+                    }
                 }
             }
         }
     }
 
-     */
-
-
     public boolean pasarlista() {
         boolean alumnoEsta = entrada.leerBooleano("si este alumno esta en clase");
         return alumnoEsta;
+    }
+
+//          Mensajes    
+
+    public void mostrarSalida() {
+        System.out.println("Saliendo...");
+    }
+
+    public void mostrarCreado(AlumnoDTO alumno) {
+        System.out.println("Alumno añadido.- " + alumno.getNombreCompleto() +
+                " con DNI: " + alumno.getDni() +
+                " Y nacido en el año " + alumno.getAnioNacimiento());
+    }
+
+    public void mostrarErrAulaLlena() {
+        System.err.println("Aula llena, no podemos añadir más alumnos");
+    }
+
+    public void mostrarMensajeAlumnosPrueba(int contadorArray) {
+        System.out.println("Creados " + contadorArray + " alumnos de prueba.");
+    }
+
+    public void mostrarAlumnosEncontrados(int contador, AlumnoDTO[] alumnosEncontrados) {
+        System.out.println("Con la parte parcial de ese nombre me aparecen:\n");
+        if (contador == 0) {
+            System.out.println("No se han encontrado alumnos");
+        } else {
+            for (int i = 0; i < contador; i++) {
+                System.out.println(alumnosEncontrados[i].getNombreCompleto() +
+                        " con DNI: " + alumnosEncontrados[i].getDni() +
+                        " Y nacido en el año " + alumnosEncontrados[i].getAnioNacimiento());
+            }
+        }
+    }
+
+    public void mostrarAlumnoDni(AlumnoDTO alumno) {
+        System.out.println("Con el DNI.- " + alumno.getDni().toUpperCase() + " está:  " + alumno.getNombreCompleto() +
+                ", nacido en el año " + alumno.getAnioNacimiento());
+    }
+
+    public void mostrarNoEncontrado(String dni) {
+        System.out.println("El DNI: " + dni + " no corresponde a ningún alumno.");
+    }
+
+    public void mostrarFinlista() {
+        System.out.println("Lista terminada.");
+    }
+
+    public void mostrarListaVacia() {
+        System.out.println("No hay ningún alumno en la lista.");
+    }
+
+    public void mostrarAlumnoEliminado(AlumnoDTO alumno) {
+        System.out.println("Se va eliminar a : " + alumno.getNombreCompleto() + " de la lista.");
     }
 }

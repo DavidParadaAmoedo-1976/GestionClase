@@ -3,11 +3,12 @@ package controlador;
 import modelo.AlumnoDTO;
 import vista.AulaVista;
 
-public class AulaControlador {
-    public static final int MAXIMO_ALUMNOS = 30;
-    private final AulaVista vista;
+import java.util.Arrays;
 
-    private final AlumnoDTO[] alumnos = new AlumnoDTO[MAXIMO_ALUMNOS];
+public class AulaControlador {
+    private final int NUMERO_MAXIMO_ALUMNOS = 30;
+    private final AulaVista vista;
+    private AlumnoDTO[] alumnos;
 
     public AulaControlador(AulaVista vista) {
         this.vista = vista;
@@ -15,7 +16,6 @@ public class AulaControlador {
 
     public void ejecuta() {
         int opcion = -1;
-
         while (opcion != 0) {
             vista.mostrarMenu();
             opcion = vista.solicitarMenu();
@@ -27,97 +27,105 @@ public class AulaControlador {
                 case 4 -> buscarPorDni();
                 case 5 -> pasarLista();
                 case 6 -> vista.mostrarClase(alumnos);
-                case 0 -> System.out.println("Saliendo...");
-                default -> System.out.println("Opción no implementada.");
+                case 0 -> vista.mostrarSalida();
             }
         }
     }
-
 
     public void crearAlumno() {
         AlumnoDTO alumno = vista.obtenerDatosAlumno();
-        for (int i = 0; i < alumnos.length; i++) {
-            if (alumnos[i] == null) {
-                alumnos[i] = alumno;
-                System.out.println("Alumno añadido.- " + alumno.getNombreCompleto() +
-                        " con DNI: " + alumno.getDni() +
-                        " Y nacido en el año " + alumno.getAnioNacimiento());
-                return;
+        AlumnoDTO[] alumnosTemp = Arrays.copyOf(alumnos, alumnos.length + 1);
+        if (alumnos.length >= NUMERO_MAXIMO_ALUMNOS) {
+            vista.mostrarErrAulaLlena();
+        } else {
+            for (int i = 0; i < alumnosTemp.length; i++) {
+                if (alumnosTemp[i] == null) {
+                    alumnosTemp[i] = alumno;
+                    alumnos = Arrays.copyOf(alumnosTemp, alumnosTemp.length);
+                    vista.mostrarCreado(alumno);
+                }
             }
         }
-        System.err.println("Aula llena, no podemos añadir más alumnos");
     }
 
     public void borrarAlumno() {
-        String dni = vista.obtenerDni();
-        int count = 0;
-        for (int i = 0; i < alumnos.length; i++) {
-            if (alumnos[i] != null) {
+        if (!comprobarLista()) {
+            vista.mostrarListaVacia();
+        } else {
+            String dni = vista.obtenerDni();
+            AlumnoDTO[] alumnosTemp = new AlumnoDTO[alumnos.length - 1];
+            int count = 0;
+            for (int i = 0; i < alumnos.length; i++) {
                 String dnis = alumnos[i].getDni();
                 if (dnis.contains(dni)) {
-                    System.out.println("se va eliminar a : " + alumnos[i].getNombreCompleto() + " de la lista.");
-                    alumnos[i] = null;
+                    vista.mostrarAlumnoEliminado(alumnos[i]);
+                } else {
+                    alumnosTemp[count] = alumnos[i];
                     count++;
                 }
             }
+            alumnos = Arrays.copyOf(alumnosTemp, alumnosTemp.length);
+            if (count == 0) vista.mostrarNoEncontrado(dni);
         }
-        if (count == 0) System.out.println("No hay alumnos con ese Dni.");
     }
 
     public void buscarPorNombreParcial() {
-        int contador = 0;
-        AlumnoDTO[] alumnosEncontrados = new AlumnoDTO[MAXIMO_ALUMNOS];
-        String nombreParcial = vista.obtenerNombreParcial();
-        for (int i = 0; i < alumnos.length; i++) {
-            if (alumnos[i] != null) {
-                String nombre = alumnos[i].getNombreCompleto().toLowerCase();
-                if (nombre.contains(nombreParcial.toLowerCase())) {
-                    alumnosEncontrados[contador] = alumnos[i];
-                    contador++;
+        if (!comprobarLista()) {
+            vista.mostrarListaVacia();
+        } else {
+            int contador = 0;
+            AlumnoDTO[] alumnosEncontrados = new AlumnoDTO[alumnos.length];
+            String nombreParcial = vista.obtenerNombreParcial();
+            for (int i = 0; i < alumnos.length; i++) {
+                if (alumnos[i] != null) {
+                    String nombre = alumnos[i].getNombreCompleto().toLowerCase();
+                    if (nombre.contains(nombreParcial.toLowerCase())) {
+                        alumnosEncontrados[contador] = alumnos[i];
+                        contador++;
+                    }
                 }
             }
-        }
-        System.out.println("Con la parte parcial de ese nombre me aparecen:\n");
-        if (contador == 0) {
-            System.out.println("No se han encontrado alumnos");
-        } else {
-            for (int i = 0; i < contador; i++) {
-                System.out.println(alumnosEncontrados[i].getNombreCompleto() +
-                        " con DNI: " + alumnosEncontrados[i].getDni() +
-                        " Y nacido en el año " + alumnosEncontrados[i].getAnioNacimiento());
-            }
+            vista.mostrarAlumnosEncontrados(contador, alumnosEncontrados);
         }
     }
 
     public void buscarPorDni() {
-        String dni = vista.obtenerDni();
-        int count = 0;
-        for (int i = 0; i < alumnos.length; i++) {
-            if (alumnos[i] != null) {
-                String dnis = alumnos[i].getDni();
-                if (dnis.contains(dni)) {
-
-                    System.out.println(alumnos[i].getNombreCompleto() +
-                            " con DNI: " + alumnos[i].getDni() +
-                            " Y nacido en el año " + alumnos[i].getAnioNacimiento());
-                    count++;
+        if (!comprobarLista()) {
+            vista.mostrarListaVacia();
+        } else {
+            String dni = vista.obtenerDni();
+            int count = 0;
+            for (int i = 0; i < alumnos.length; i++) {
+                if (alumnos[i] != null) {
+                    String dnis = alumnos[i].getDni();
+                    if (dnis.contains(dni)) {
+                        vista.mostrarAlumnoDni(alumnos[i]);
+                        count++;
+                    }
                 }
             }
+            if (count == 0) vista.mostrarNoEncontrado(dni);
         }
-        if (count == 0) System.out.println("No hay alumnos con ese Dni.");
     }
 
     public void pasarLista() {
-        for( int i = 0; i < alumnos.length; i++){
-            if(alumnos[i] == null){
-                continue;
-            } else {
-                System.out.println(alumnos[i].getNombreCompleto());
-                Boolean estaEnClase = vista.pasarlista();
-                alumnos[i].setEstaEnClase(estaEnClase);
+        if (!comprobarLista()) {
+            vista.mostrarListaVacia();
+        } else {
+            for (int i = 0; i < alumnos.length; i++) {
+                if (alumnos[i] == null) {
+                } else {
+                    System.out.println(alumnos[i].getNombreCompleto());
+                    Boolean estaEnClase = vista.pasarlista();
+                    alumnos[i].setEstaEnClase(estaEnClase);
+                }
             }
+            vista.mostrarFinlista();
         }
-        System.out.println("Lista terminada.");
+    }
+
+    public boolean comprobarLista() {
+        return alumnos != null && alumnos.length != 0;
     }
 
     public void crearAlumnoPrueba() {
@@ -143,13 +151,7 @@ public class AulaControlador {
                 new AlumnoDTO("Carmen Molina Lara", "11225544S", 1999),
                 new AlumnoDTO("Hugo Sánchez Bravo", "22336655T", 2001)
         };
-        for (int i = 0; i < alumnos.length && i < alumnosPrueba.length; i++) {
-
-            if (alumnos[i] == null) {
-                alumnos[i] = alumnosPrueba[i];
-                System.out.println("Creado alumno de prueba " + (i + 1));
-
-            }
-        }
+        alumnos = Arrays.copyOf(alumnosPrueba, alumnosPrueba.length);
+        vista.mostrarMensajeAlumnosPrueba(alumnosPrueba.length);
     }
 }

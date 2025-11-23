@@ -54,7 +54,7 @@ public class ValidarDatos {
         } catch (Exception e) {
             System.out.println("Error al leer el DNI. Inténtelo nuevamente.");
         }
-        return dni;
+        return dni.toUpperCase();
     }
 
     private boolean validarDni(String dni) {
