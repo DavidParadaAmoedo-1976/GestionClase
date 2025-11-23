@@ -36,8 +36,8 @@ public class AulaControlador {
         if (alumnos.length >= NUMERO_MAXIMO_ALUMNOS) {
             vista.mostrarErrAulaLlena();
         } else {
-        AlumnoDTO alumno = vista.obtenerDatosAlumno();
-        AlumnoDTO[] alumnosTemp = Arrays.copyOf(alumnos, alumnos.length + 1);
+            AlumnoDTO alumno = vista.obtenerDatosAlumno();
+            AlumnoDTO[] alumnosTemp = Arrays.copyOf(alumnos, alumnos.length + 1);
             for (int i = 0; i < alumnosTemp.length; i++) {
                 if (alumnosTemp[i] == null) {
                     alumnosTemp[i] = alumno;
@@ -49,7 +49,7 @@ public class AulaControlador {
     }
 
     public void borrarAlumno() {
-        if (!comprobarLista()) {
+        if (comprobarLista()) {
             vista.mostrarListaVacia();
         } else {
             String dni = vista.obtenerDni();
@@ -70,7 +70,7 @@ public class AulaControlador {
     }
 
     public void buscarPorNombreParcial() {
-        if (!comprobarLista()) {
+        if (comprobarLista()) {
             vista.mostrarListaVacia();
         } else {
             int contador = 0;
@@ -90,7 +90,7 @@ public class AulaControlador {
     }
 
     public void buscarPorDni() {
-        if (!comprobarLista()) {
+        if (comprobarLista()) {
             vista.mostrarListaVacia();
         } else {
             String dni = vista.obtenerDni();
@@ -109,23 +109,20 @@ public class AulaControlador {
     }
 
     public void pasarLista() {
-        if (!comprobarLista()) {
+        if (comprobarLista()) {
             vista.mostrarListaVacia();
         } else {
             for (int i = 0; i < alumnos.length; i++) {
-                if (alumnos[i] == null) {
-                } else {
-                    System.out.println(alumnos[i].getNombreCompleto());
-                    Boolean estaEnClase = vista.pasarlista();
-                    alumnos[i].setEstaEnClase(estaEnClase);
-                }
+                System.out.println(alumnos[i].getNombreCompleto());
+                boolean estaEnClase = vista.pasarlista();
+                alumnos[i].setEstaEnClase(estaEnClase);
             }
             vista.mostrarFinlista();
         }
     }
 
     public boolean comprobarLista() {
-        return alumnos != null && alumnos.length != 0;
+        return alumnos == null || alumnos.length == 0;
     }
 
     public void crearAlumnoPrueba() {

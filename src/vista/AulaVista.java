@@ -28,8 +28,7 @@ public class AulaVista {
 
     public int solicitarMenu() {
 
-        int opcion = entrada.enteroCorrecto("Elije una opción: ", 0, 6);
-        return opcion;
+        return entrada.enteroCorrecto("Elije una opción: ", 0, 6);
     }
 
     public AlumnoDTO obtenerDatosAlumno() {
@@ -42,13 +41,11 @@ public class AulaVista {
     }
 
     public String obtenerDni() {
-        String dni = entrada.leerDni();
-        return dni;
+        return entrada.leerDni();
     }
 
     public String obtenerNombreParcial() {
-        String nombreParcial = entrada.leerNombre();
-        return nombreParcial;
+        return entrada.leerNombre();
     }
 
 /*
@@ -89,8 +86,7 @@ public class AulaVista {
     }
 
     public boolean pasarlista() {
-        boolean alumnoEsta = entrada.leerBooleano("si este alumno esta en clase");
-        return alumnoEsta;
+        return entrada.leerBooleano("si este alumno esta en clase");
     }
 
 //          Mensajes    

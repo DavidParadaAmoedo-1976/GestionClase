@@ -17,24 +17,12 @@ public class AlumnoDTO {
         return nombreCompleto;
     }
 
-    public void setNombreCompleto(String nombreCompleto) {
-        this.nombreCompleto = nombreCompleto;
-    }
-
     public String getDni() {
         return dni;
     }
 
-    public void setDni(String dni) {
-        this.dni = dni;
-    }
-
     public int getAnioNacimiento() {
         return anioNacimiento;
-    }
-
-    public void setAnioNacimiento(int anioNacimiento) {
-        this.anioNacimiento = anioNacimiento;
     }
 
     public boolean isEstaEnClase() {
