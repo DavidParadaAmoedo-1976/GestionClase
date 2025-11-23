@@ -6,7 +6,7 @@ import vista.AulaVista;
 import java.util.Arrays;
 
 public class AulaControlador {
-    private final int NUMERO_MAXIMO_ALUMNOS = 30;
+    private final int NUMERO_MAXIMO_ALUMNOS = 20;
     private final AulaVista vista;
     private AlumnoDTO[] alumnos;
 
@@ -33,11 +33,11 @@ public class AulaControlador {
     }
 
     public void crearAlumno() {
-        AlumnoDTO alumno = vista.obtenerDatosAlumno();
-        AlumnoDTO[] alumnosTemp = Arrays.copyOf(alumnos, alumnos.length + 1);
         if (alumnos.length >= NUMERO_MAXIMO_ALUMNOS) {
             vista.mostrarErrAulaLlena();
         } else {
+        AlumnoDTO alumno = vista.obtenerDatosAlumno();
+        AlumnoDTO[] alumnosTemp = Arrays.copyOf(alumnos, alumnos.length + 1);
             for (int i = 0; i < alumnosTemp.length; i++) {
                 if (alumnosTemp[i] == null) {
                     alumnosTemp[i] = alumno;
