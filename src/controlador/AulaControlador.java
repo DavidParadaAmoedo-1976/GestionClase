@@ -6,7 +6,7 @@ import vista.AulaVista;
 import java.util.Arrays;
 
 public class AulaControlador {
-    private final int NUMERO_MAXIMO_ALUMNOS = 20;
+    private final int NUMERO_MAXIMO_ALUMNOS = 30;
     private final AulaVista vista;
     private AlumnoDTO[] alumnos;
 
