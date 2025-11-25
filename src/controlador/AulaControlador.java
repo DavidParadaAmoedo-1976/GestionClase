@@ -2,7 +2,6 @@ package controlador;
 
 import modelo.AlumnoDTO;
 import vista.AulaVista;
-
 import java.util.Arrays;
 
 public class AulaControlador {
@@ -37,7 +36,7 @@ public class AulaControlador {
             vista.mostrarErrAulaLlena();
         } else {
             AlumnoDTO alumno = vista.obtenerDatosAlumno();
-            if (!comprobarDniAlumno(alumno)) {
+            if (comprobarDniAlumno(alumno)) {
                 vista.mostrarDniExiste();
             } else {
                 AlumnoDTO[] alumnosTemp = Arrays.copyOf(alumnos, alumnos.length + 1);
@@ -57,10 +56,10 @@ public class AulaControlador {
         for(int i = 0; i < alumnos.length; i++){
             String dni = alumnos[i].getDni().toUpperCase();
             if (dni.equalsIgnoreCase(dniAlumno)){
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     public void borrarAlumno() {
