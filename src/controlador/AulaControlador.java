@@ -2,6 +2,8 @@ package controlador;
 
 import modelo.AlumnoDTO;
 import vista.AulaVista;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class AulaControlador {
@@ -34,20 +36,24 @@ public class AulaControlador {
     public void crearAlumno() {
         if (alumnos.length >= NUMERO_MAXIMO_ALUMNOS) {
             vista.mostrarErrAulaLlena();
+            return;
+        }
+
+
+
+        AlumnoDTO alumno = vista.obtenerDatosAlumno();
+        if (comprobarDniAlumno(alumno)) {
+            vista.mostrarDniExiste();
         } else {
-            AlumnoDTO alumno = vista.obtenerDatosAlumno();
-            if (comprobarDniAlumno(alumno)) {
-                vista.mostrarDniExiste();
-            } else {
-                AlumnoDTO[] alumnosTemp = Arrays.copyOf(alumnos, alumnos.length + 1);
-                for (int i = 0; i < alumnosTemp.length; i++) {
-                    if (alumnosTemp[i] == null) {
-                        alumnosTemp[i] = alumno;
-                        alumnos = Arrays.copyOf(alumnosTemp, alumnosTemp.length);
-                        vista.mostrarCreado(alumno);
-                    }
+            AlumnoDTO[] alumnosTemp = Arrays.copyOf(alumnos, alumnos.length + 1);
+            for (int i = 0; i < alumnosTemp.length; i++) {
+                if (alumnosTemp[i] == null) {
+                    alumnosTemp[i] = alumno;
+                    alumnos = Arrays.copyOf(alumnosTemp, alumnosTemp.length);
+                    vista.mostrarCreado(alumno);
                 }
             }
+
         }
     }
 
