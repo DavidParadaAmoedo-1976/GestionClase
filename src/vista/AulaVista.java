@@ -142,4 +142,8 @@ public class AulaVista {
     public void mostrarAlumnoEliminado(AlumnoDTO alumno) {
         System.out.println("Se va eliminar a : " + alumno.getNombreCompleto() + " de la lista.");
     }
+
+    public void mostrarDniExiste() {
+        System.err.println("Ese Dni ya existe,comprueba que el alumno no este añadido o tengas un error en el Dni.");
+    }
 }

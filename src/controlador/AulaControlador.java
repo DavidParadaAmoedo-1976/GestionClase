@@ -37,15 +37,30 @@ public class AulaControlador {
             vista.mostrarErrAulaLlena();
         } else {
             AlumnoDTO alumno = vista.obtenerDatosAlumno();
-            AlumnoDTO[] alumnosTemp = Arrays.copyOf(alumnos, alumnos.length + 1);
-            for (int i = 0; i < alumnosTemp.length; i++) {
-                if (alumnosTemp[i] == null) {
-                    alumnosTemp[i] = alumno;
-                    alumnos = Arrays.copyOf(alumnosTemp, alumnosTemp.length);
-                    vista.mostrarCreado(alumno);
+            if (!comprobarDniAlumno(alumno)) {
+                vista.mostrarDniExiste();
+            } else {
+                AlumnoDTO[] alumnosTemp = Arrays.copyOf(alumnos, alumnos.length + 1);
+                for (int i = 0; i < alumnosTemp.length; i++) {
+                    if (alumnosTemp[i] == null) {
+                        alumnosTemp[i] = alumno;
+                        alumnos = Arrays.copyOf(alumnosTemp, alumnosTemp.length);
+                        vista.mostrarCreado(alumno);
+                    }
                 }
             }
         }
+    }
+
+    public boolean comprobarDniAlumno(AlumnoDTO alumno) {
+        String dniAlumno = alumno.getDni();
+        for(int i = 0; i < alumnos.length; i++){
+            String dni = alumnos[i].getDni().toUpperCase();
+            if (dni.equalsIgnoreCase(dniAlumno)){
+                return false;
+            }
+        }
+        return true;
     }
 
     public void borrarAlumno() {
